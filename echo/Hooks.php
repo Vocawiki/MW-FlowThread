@@ -103,7 +103,7 @@ class EchoHooks {
 			}
 			$targets[] = $parent->userid;
 		}
-		EchoEvent::create(array(
+		Event::create(array(
 			'type' => 'flowthread_reply',
 			'title' => $title,
 			'extra' => array(
