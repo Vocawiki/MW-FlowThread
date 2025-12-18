@@ -110,6 +110,7 @@ class Hooks {
 				'href' => SpecialPage::getTitleFor('FlowThreadManage')->getLocalURL(array(
 					'user' => $user->getName(),
 				)),
+				'id' => 't-usercomments',
 			];
 		}
 	}
