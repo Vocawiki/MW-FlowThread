@@ -407,7 +407,7 @@ class API extends ApiBase {
 			throw $e;
 		} catch (Exception $e) {
 			$this->getResult()->addValue("error", 'code', 'unknown_error');
-			$this->getResult()->addValue("error", 'info', $e->getMessage());
+			$this->getResult()->addValue("error", 'info', $e->getMessage() . "\n" . $e->getTraceAsString());
 		}
 		return true;
 	}
