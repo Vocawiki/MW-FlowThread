@@ -189,14 +189,6 @@ class API extends ApiBase {
 		$this->getResult()->addValue(null, $this->getModuleName(), $obj);
 	}
 
-	public static function stripWrapper( $html ) {
-		$m = [];
-		if ( preg_match( '/^<div class="mw-parser-output">(.*)<\/div>$/sU', $html, $m ) ) {
-			$html = $m[1];
-		}
-		return $html;
-	}
-
 	public function execute() {
 		$main = $this->getMain();
 		$action = $main->getVal('type');
@@ -374,7 +366,7 @@ class API extends ApiBase {
 
 				$text = $parser->preSaveTransform($text, $title, $this->getUser(), $opt);
 				$output = $parser->parse($text, $title, $opt);
-				$text = $output->getText(['enableSectionEditLinks' => false]); // Edit button will not work!
+				$text = $output->runOutputPipeline( $opt, [ 'enableSectionEditLinks' => false, 'unwrap' => true ] )->getContentHolderText();
 
 				// Get all mentioned user
 				$mentioned = Helper::generateMentionedList($output, $postObject);
@@ -384,7 +376,6 @@ class API extends ApiBase {
 				unset($output);
 
 				// Useless p wrapper
-				$text = self::stripWrapper($text);
 				$text = Parser::stripOuterParagraph($text);
 				$text = SpamFilter::sanitize($text);
 
