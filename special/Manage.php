@@ -95,7 +95,7 @@ class SpecialManage extends SpecialPage {
 		$html .= Xml::tags('p', null, $this->getFilterLinks($this->filter));
 
 		// Submit button
-		$html .= Xml::submitButton($this->msg('allpagessubmit')->text());
+		$html .= Html::submitButton($this->msg('allpagessubmit')->text());
 
 		// Fieldset
 		$html = Xml::fieldset($this->msg('flowthreadmanage')->text(), $html);
@@ -143,37 +143,52 @@ class SpecialManage extends SpecialPage {
 	}
 
 	private function getUserInput($user) {
-		$label = Xml::inputLabel(
+		$label = Html::label(
 			$this->msg('flowthreadmanage-user')->text(),
+			'user'
+		) . ' ' . Html::input(
 			'user',
-			'',
-			15,
 			$user,
-			array('class' => 'mw-autocomplete-user') # This together with mediawiki.userSuggest will give us an auto completion
+			'text',
+			array(
+				'id' => 'user',
+				'size' => 15,
+				'class' => 'mw-autocomplete-user'
+			)
 		);
 
 		return '<span style="white-space: nowrap">' . $label . '</span>';
 	}
 
 	private function getTitleInput($title) {
-		$label = Xml::inputLabel(
+		$label = Html::label(
 			$this->msg('flowthreadmanage-title')->text(),
+			'page'
+		) . ' ' . Html::input(
 			'page',
-			'',
-			20,
-			$title
+			$title,
+			'text',
+			array(
+				'id' => 'page',
+				'size' => 20
+			)
 		);
 
 		return '<span style="white-space: nowrap">' . $label . '</span>';
 	}
 
 	private function getKeywordInput($keyword) {
-		$label = Xml::inputLabel(
+		$label = Html::label(
 			$this->msg('flowthreadmanage-keyword')->text(),
+			'keyword'
+		) . ' ' . Html::input(
 			'keyword',
-			'',
-			20,
-			$keyword
+			$keyword,
+			'text',
+			array(
+				'id' => 'keyword',
+				'size' => 20
+			)
 		);
 
 		return '<span style="white-space: nowrap">' . $label . '</span>';
