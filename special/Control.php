@@ -37,7 +37,7 @@ class SpecialControl extends FormSpecialPage {
 
 		$this->getSkin()->setRelevantTitle( $this->title );
 		$out = $this->getOutput();
-		$out->setPageTitle( $this->msg( 'flowthreadcontrol', $this->title->getPrefixedText() ) );
+		$out->setPageTitle( $this->msg( 'flowthreadcontrol', $this->title->getPrefixedText() )->text() );
 	}
 
 	protected function setParameter( $par ) {
