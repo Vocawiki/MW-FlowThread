@@ -337,6 +337,14 @@ class API extends ApiBase {
 
 				// Need to feed this to spam filter
 				$useWikitext = $this->getMain()->getCheck('wikitext');
+
+				// Check if PlainTextOnly is enabled
+				global $wgFlowThreadConfig;
+				$PlainTextOnly = isset($wgFlowThreadConfig['PlainTextOnly']) && $wgFlowThreadConfig['PlainTextOnly'];
+				if ($PlainTextOnly) {
+					$useWikitext = false;
+				}
+
 				$filterResult = SpamFilter::validate($text, $this->getUser(), $useWikitext);
 				$text = $filterResult['text'];
 

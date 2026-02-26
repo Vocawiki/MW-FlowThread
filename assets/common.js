@@ -191,7 +191,7 @@ function createReplyBox(thread) {
       pageid: (thread && thread.post.pageid) || mw.config.get('wgArticleId'),
       postid: thread && thread.post.id,
       content: text,
-      wikitext: replyBox.isInWikitextMode(),
+      wikitext: config.PlainTextOnly ? false : replyBox.isInWikitextMode(),
     };
     api.post(req).done(reloadComments).fail(function(error, obj) {
       if (obj.error)
@@ -214,7 +214,7 @@ function ReplyBox(thread) {
     + '<textarea placeholder="' + mw.msg('flowthread-ui-placeholder') + '"></textarea>'
     + '<div class="comment-preview" style="display:none;"></div>'
     + '<div class="comment-toolbar">'
-    + '<button class="flowthread-btn flowthread-btn-wikitext' + (localStorage.flowthread_use_wikitext === 'true' ? ' on' : '') + '" title="' + mw.msg('flowthread-ui-usewikitext') + '"></button>'
+    + (config.PlainTextOnly ? '' : '<button class="flowthread-btn flowthread-btn-wikitext' + (localStorage.flowthread_use_wikitext === 'true' ? ' on' : '') + '" title="' + mw.msg('flowthread-ui-usewikitext') + '"></button>')
     + '<button class="flowthread-btn flowthread-btn-preview" title="' + mw.msg('flowthread-ui-preview') + '"></button>'
     + '<button class="comment-submit">' + mw.msg('flowthread-ui-submit') + '</button>'
     + '</div>'

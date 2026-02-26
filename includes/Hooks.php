@@ -42,6 +42,7 @@ class Hooks {
 		$config = array(
 			'Avatar' => $wgFlowThreadConfig['Avatar'],
 			'AnonymousAvatar' => $wgFlowThreadConfig['AnonymousAvatar'],
+			'PlainTextOnly' => isset($wgFlowThreadConfig['PlainTextOnly']) && $wgFlowThreadConfig['PlainTextOnly'],
 		);
 
 		// First check if user can post at all
