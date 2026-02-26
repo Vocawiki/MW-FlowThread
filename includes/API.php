@@ -352,6 +352,8 @@ class API extends ApiBase {
 				// the text, so unify both cases will be more convenient.
 				if (!$useWikitext) {
 					$text = '<nowiki>' . htmlspecialchars($text) . '</nowiki>';
+				} else {
+					$text = SpamFilter::sanitize($text);
 				}
 
 				// Restrict max nest level. If exceeded, automatically prepend a @ before
@@ -385,7 +387,6 @@ class API extends ApiBase {
 
 				// Useless p wrapper
 				$text = Parser::stripOuterParagraph($text);
-				$text = SpamFilter::sanitize($text);
 
 				// Fix object
 				if (!$filterResult['good']) {
