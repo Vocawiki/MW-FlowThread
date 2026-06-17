@@ -43,6 +43,7 @@ class Hooks {
 			'Avatar' => $wgFlowThreadConfig['Avatar'],
 			'AnonymousAvatar' => $wgFlowThreadConfig['AnonymousAvatar'],
 			'PlainTextOnly' => isset($wgFlowThreadConfig['PlainTextOnly']) && $wgFlowThreadConfig['PlainTextOnly'],
+			'MaxContentLength' => isset($wgFlowThreadConfig['MaxContentLength']) ? intval($wgFlowThreadConfig['MaxContentLength']) : 0,
 		);
 
 		// First check if user can post at all

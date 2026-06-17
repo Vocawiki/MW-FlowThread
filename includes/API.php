@@ -303,6 +303,15 @@ class API extends ApiBase {
 					$this->dieNoParam('content');
 				}
 
+				global $wgFlowThreadConfig;
+				$maxContentLength = isset($wgFlowThreadConfig['MaxContentLength']) ? intval($wgFlowThreadConfig['MaxContentLength']) : 0;
+				if (
+					$maxContentLength > 0 &&
+					mb_strlen($text, 'UTF-8') > $maxContentLength
+				) {
+					$this->dieWithError(['apierror-flowthread-contenttoolong', $maxContentLength]);
+				}
+
 				// Permission check
 				Post::checkIfCanPost($this->getUser());
 
@@ -318,6 +327,10 @@ class API extends ApiBase {
 				$controlStatus = SpecialControl::getControlStatus($title);
 				if ($controlStatus !== SpecialControl::STATUS_ENABLED) {
 					$this->dieWithError(['apierror-commentcontrol', $title]);
+				}
+
+				if ($this->getUser()->pingLimiter('flowthread-post')) {
+					$this->dieWithError('apierror-ratelimited', 'ratelimited');
 				}
 
 				// Construct the object first without setting the text
@@ -339,7 +352,6 @@ class API extends ApiBase {
 				$useWikitext = $this->getMain()->getCheck('wikitext');
 
 				// Check if PlainTextOnly is enabled
-				global $wgFlowThreadConfig;
 				$PlainTextOnly = isset($wgFlowThreadConfig['PlainTextOnly']) && $wgFlowThreadConfig['PlainTextOnly'];
 				if ($PlainTextOnly) {
 					$useWikitext = false;
@@ -357,7 +369,6 @@ class API extends ApiBase {
 				}
 
 				// Restrict max nest level. If exceeded, automatically prepend a @ before
-				global $wgFlowThreadConfig;
 				if ($postObject->getNestLevel() > $wgFlowThreadConfig['MaxNestLevel']) {
 					$parent = $postObject->getParent();
 					$postObject->parentid = $parent->parentid;

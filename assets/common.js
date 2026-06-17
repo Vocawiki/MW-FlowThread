@@ -1,6 +1,14 @@
 var config = mw.config.get('wgFlowThreadConfig');
 var replyBox = null;
 
+function getContentLengthLimit() {
+  return Math.max(parseInt(config.MaxContentLength, 10) || 0, 0);
+}
+
+function getContentLength(text) {
+  return Array.from(text || '').length;
+}
+
 /* Get avatar by user name */
 function getAvatar(id, username) {
   if (id === 0) {
@@ -183,6 +191,9 @@ function createReplyBox(thread) {
       showMsgDialog(mw.msg('flowthread-ui-nocontent'));
       return;
     }
+    if (replyBox.isContentTooLong()) {
+      return;
+    }
     replyBox.setValue('');
     var api = new mw.Api();
     var req = {
@@ -211,11 +222,12 @@ function ReplyBox(thread) {
     + '<img src="' + getAvatar(mw.user.getId(), mw.user.id()) + '"></img>'
     + '</div>'
     + '<div class="comment-body">'
-    + '<textarea placeholder="' + mw.msg('flowthread-ui-placeholder') + '"></textarea>'
+    + '<textarea name="flowthread-comment-content" placeholder="' + mw.msg('flowthread-ui-placeholder') + '"></textarea>'
     + '<div class="comment-preview" style="display:none;"></div>'
     + '<div class="comment-toolbar">'
     + (config.PlainTextOnly ? '' : '<button class="flowthread-btn flowthread-btn-wikitext' + (localStorage.flowthread_use_wikitext === 'true' ? ' on' : '') + '" title="' + mw.msg('flowthread-ui-usewikitext') + '"></button>')
     + '<button class="flowthread-btn flowthread-btn-preview" title="' + mw.msg('flowthread-ui-preview') + '"></button>'
+    + '<span class="comment-characterlimit"></span>'
     + '<button class="comment-submit">' + mw.msg('flowthread-ui-submit') + '</button>'
     + '</div>'
     + '</div></div>';
@@ -224,9 +236,17 @@ function ReplyBox(thread) {
   var object = $(template);
   this.object = object;
   this.thread = thread;
+  this.maxContentLength = getContentLengthLimit();
 
-  object.find('textarea').keyup(function(e) {
+  if (this.maxContentLength) {
+    this.updateCharacterLimit();
+  } else {
+    object.find('.comment-characterlimit').hide();
+  }
+
+  object.find('textarea').on('input keyup', function(e) {
     if (e.ctrlKey && e.which === 13) object.find('.comment-submit').click();
+    self.updateCharacterLimit();
     self.pack();
   });
 
@@ -272,6 +292,7 @@ function ReplyBox(thread) {
   });
 
   object.find('.comment-submit').click(function() {
+    if ($(this).prop('disabled')) return;
     if (self.onSubmit) self.onSubmit();
   });
 }
@@ -285,7 +306,23 @@ ReplyBox.prototype.getValue = function() {
 };
 
 ReplyBox.prototype.setValue = function(t) {
-  return this.object.find('textarea').val(t);
+  var ret = this.object.find('textarea').val(t);
+  this.updateCharacterLimit();
+  return ret;
+};
+
+ReplyBox.prototype.updateCharacterLimit = function() {
+  if (!this.maxContentLength) return;
+  var length = getContentLength(this.getValue());
+  var exceeded = length > this.maxContentLength;
+  this.object.find('.comment-characterlimit')
+    .text(mw.msg('flowthread-ui-characterlimit', length, this.maxContentLength))
+    .toggleClass('comment-characterlimit-exceeded', exceeded);
+  this.object.find('.comment-submit').prop('disabled', exceeded);
+};
+
+ReplyBox.prototype.isContentTooLong = function() {
+  return this.maxContentLength && getContentLength(this.getValue().trim()) > this.maxContentLength;
 };
 
 ReplyBox.prototype.pack = function() {

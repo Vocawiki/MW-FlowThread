@@ -78,6 +78,8 @@ class SpecialManage extends SpecialPage {
 		$output->addJsConfigVars(array('wgFlowThreadConfig' => array(
 			'Avatar' => $wgFlowThreadConfig['Avatar'],
 			'AnonymousAvatar' => $wgFlowThreadConfig['AnonymousAvatar'],
+			'PlainTextOnly' => isset($wgFlowThreadConfig['PlainTextOnly']) && $wgFlowThreadConfig['PlainTextOnly'],
+			'MaxContentLength' => isset($wgFlowThreadConfig['MaxContentLength']) ? intval($wgFlowThreadConfig['MaxContentLength']) : 0,
 		)));
 	}
 

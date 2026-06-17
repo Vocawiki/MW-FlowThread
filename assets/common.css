@@ -77,6 +77,29 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15) inset, 0px 0px 0px white;
 }
 
+.comment-submit:disabled {
+    color: #a2a9b1;
+    background-color: #f8f9fa;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+.comment-submit:disabled:hover {
+    box-shadow: none;
+}
+
+.comment-characterlimit {
+    position: absolute;
+    right: 110px;
+    top: 50%;
+    line-height: 1;
+    color: #72777d;
+}
+
+.comment-characterlimit-exceeded {
+    color: #d33;
+}
+
 .flowthread-btn {
     position: relative;
     top: -1px;

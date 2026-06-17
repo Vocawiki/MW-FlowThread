@@ -102,6 +102,8 @@
         "flowthread-ui-placeholder",
         "flowthread-ui-submit",
         "flowthread-ui-nocontent",
+        "flowthread-ui-contenttoolong",
+        "flowthread-ui-characterlimit",
         "flowthread-ui-popular",
         "flowthread-ui-networkerror",
         "flowthread-ui-useroptout"
@@ -139,6 +141,8 @@
         "flowthread-ui-placeholder",
         "flowthread-ui-submit",
         "flowthread-ui-nocontent",
+        "flowthread-ui-contenttoolong",
+        "flowthread-ui-characterlimit",
         "flowthread-ui-networkerror",
         "flowthread-ui-selectall",
         "flowthread-ui-unselectall",
@@ -165,6 +169,18 @@
     "sysop": {
       "commentadmin": true,
       "commentadmin-restricted": true
+    }
+  },
+  "RateLimits": {
+    "flowthread-post": {
+      "user": [
+        8,
+        60
+      ],
+      "ip": [
+        8,
+        60
+      ]
     }
   },
   "LogTypes": [
@@ -196,7 +212,8 @@
       "PopularPostCount": 3,
       "PopularPostThreshold": 1,
       "MaxNestLevel": 3,
-      "PlainTextOnly": false
+      "PlainTextOnly": false,
+      "MaxContentLength": 0
     },
     "TriggerFlowThreadHooks": true,
     "FlowThreadEnforcePost": false

@@ -60,6 +60,8 @@
   "flowthread-ui-placeholder": "说点什么吧...",
   "flowthread-ui-submit": "提交",
   "flowthread-ui-nocontent": "内容不能为空",
+  "flowthread-ui-contenttoolong": "内容不能超过$1个字。",
+  "flowthread-ui-characterlimit": "$1/$2",
   "flowthread-ui-cantpost": "您没有权限发表评论，请查看站点关于评论的政策。",
   "flowthread-ui-editblacklist": "编辑屏蔽列表",
   "flowthread-ui-networkerror": "无法连接到服务器。",
@@ -103,6 +105,7 @@
   "apierror-nosuchpostid": "没有编号为$1的评论。",
   "apierror-cantpost": "不能再“$1”上评论。",
   "apierror-commentcontrol": "“$1”上的评论已被关闭。",
+  "apierror-flowthread-contenttoolong": "内容不能超过$1个字。",
 
   "sidebar-section-extension": "扩展程序",
   "sidebar-usercomments": "用户评论",

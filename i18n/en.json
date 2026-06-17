@@ -60,6 +60,8 @@
   "flowthread-ui-placeholder": "Say Something...",
   "flowthread-ui-submit": "Submit",
   "flowthread-ui-nocontent": "Content cannot be empty",
+  "flowthread-ui-contenttoolong": "Content cannot be longer than $1 characters.",
+  "flowthread-ui-characterlimit": "$1/$2",
   "flowthread-ui-cantpost": "You do not have right to post. Please check site's policy about commenting.",
   "flowthread-ui-editblacklist": "Edit Blacklist",
   "flowthread-ui-networkerror": "Cannot connect to the server.",
@@ -106,6 +108,7 @@
   "apierror-nosuchpostid": "There is no post with ID $1.",
   "apierror-cantpost": "Cannot post on $1.",
   "apierror-commentcontrol": "Commenting is disabled on $1.",
+  "apierror-flowthread-contenttoolong": "Content cannot be longer than $1 characters.",
 
   "sidebar-section-extension": "Extension",
   "sidebar-usercomments": "User Comments",

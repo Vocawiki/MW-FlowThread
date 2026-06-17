@@ -17,6 +17,8 @@ A commenting system for MediaWiki
 	* `$wgFlowThreadConfig['Avatar']` (string), should be set to the URL of the avatar for registered user. You can use ${username} as a placeholder for user's name. Please note that you need to use single quotes ('') to include the placeholder, otherwise PHP will substitute it right away.
 	* `$wgFlowThreadConfig['MaxNestLevel']` (int): Default to 3, this restricted max level of nested reply.
 	* `$wgFlowThreadConfig['PlainTextOnly']` (bool): Default to false, when enabled, comments will only accept plain text (no wikitext parsing).
+	* `$wgFlowThreadConfig['MaxContentLength']` (int): Default to 0, this controls the maximum Unicode character count. Values less than or equal to 0 disable the limit.
+* Posting comments is rate limited by MediaWiki's `$wgRateLimits['flowthread-post']`, defaulting to 8 posts per 60 seconds for each registered user and per IP.
 * In old versions, we do not enforce POST method on APIs that require database write. This will be changed in the future. To allow migration, `$wgFlowThreadEnforcePost` is introduced to control this behaviour. It is current defaulted to false, but will later be changed to true.
 * You can set user rights: 
 	* comment: User need this right to post
